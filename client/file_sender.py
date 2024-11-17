@@ -1,9 +1,8 @@
 import asyncio
 import os
 import logging
-from .chunk_manager import ChunkManager
-from .state_manager import StateManager
-from .network_module import NetworkModule
+from chunk_manager import ChunkManager
+from network_module import NetworkModule
 import aiohttp
 import sys
 from tenacity import RetryError
@@ -74,7 +73,7 @@ if __name__ == "__main__":
         print("Usage: python file_sender.py <path_to_file>")
         sys.exit(1)
     
-    server_address = "http://server:8000"
+    server_address = "http://localhost:8000"
     filepath = sys.argv[1]
     sender = FileSender(server_address, filepath)
     asyncio.run(sender.start_transfer())
