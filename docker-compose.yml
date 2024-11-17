@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  server:
+    build:
+      context: .
+      dockerfile: server/Dockerfile
+    container_name: server_container
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./received_files:/received_files
+    networks:
+      - file_transfer_network
+    
+  client1:
+    build:
+      context: .
+      dockerfile: client/Dockerfile
+    networks:
+      - file_transfer_network
+    entrypoint: ["python", "file_sender.py", "/app/test1.mp4"]
+    depends_on:
+      - server
+
+      
+networks:
+  file_transfer_network:
+    driver: bridge
